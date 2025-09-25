@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce - Sua Loja Online</title>
+    <meta name="description" content="A melhor loja online com os melhores produtos">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Loading Spinner -->
+    <div id="loading" class="loading hidden">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>ShopMax</h1>
+                </div>
+                
+                <div class="search-container">
+                    <input type="text" id="search-input" class="search-input" placeholder="Buscar produtos...">
+                    <button class="search-btn" id="search-btn">🔍</button>
+                </div>
+
+                <div class="header-actions">
+                    <button class="header-btn" id="login-btn">
+                        <span class="icon">👤</span>
+                        <span id="user-name">Login</span>
+                    </button>
+                    <button class="header-btn cart-btn" id="cart-btn">
+                        <span class="icon">🛒</span>
+                        <span class="cart-count" id="cart-count">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Home Page -->
+        <section id="home-page" class="page active">
+            <div class="container">
+                <!-- Filters -->
+                <div class="filters-section">
+                    <h2>Produtos</h2>
+                    <div class="filters">
+                        <select id="category-filter" class="form-control">
+                            <option value="">Todas as categorias</option>
+                        </select>
+                        <select id="sort-filter" class="form-control">
+                            <option value="">Ordenar por</option>
+                            <option value="price-asc">Menor preço</option>
+                            <option value="price-desc">Maior preço</option>
+                            <option value="rating">Melhor avaliação</option>
+                            <option value="name">Nome A-Z</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Products Grid -->
+                <div class="products-grid" id="products-grid">
+                    <!-- Products will be inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Page -->
+        <section id="login-page" class="page">
+            <div class="container">
+                <div class="login-container">
+                    <h2>Entrar na sua conta</h2>
+                    
+                    <div class="user-type-selector">
+                        <button class="user-type-btn active" data-type="cliente">Cliente</button>
+                        <button class="user-type-btn" data-type="vendedor">Vendedor</button>
+                    </div>
+
+                    <form id="login-form" class="login-form">
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="password">Senha</label>
+                            <input type="password" id="password" class="form-control" required>
+                        </div>
+
+                        <button type="submit" class="btn btn--primary btn--full-width">Entrar</button>
+                    </form>
+
+                    <div class="login-demo">
+                        <p><strong>Demo Credenciais:</strong></p>
+                        <p>Cliente: cliente@email.com | senha: cliente123</p>
+                        <p>Vendedor: vendedor@email.com | senha: vendedor123</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Checkout Page -->
+        <section id="checkout-page" class="page">
+            <div class="container">
+                <div class="checkout-container">
+                    <h2>Finalizar Pedido</h2>
+                    
+                    <div class="checkout-content">
+                        <div class="checkout-form">
+                            <form id="checkout-form">
+                                <h3>Dados de Entrega</h3>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="delivery-name">Nome Completo</label>
+                                    <input type="text" id="delivery-name" class="form-control" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="delivery-address">Endereço</label>
+                                    <input type="text" id="delivery-address" class="form-control" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="delivery-city">Cidade</label>
+                                    <input type="text" id="delivery-city" class="form-control" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="delivery-cep">CEP</label>
+                                    <input type="text" id="delivery-cep" class="form-control" required>
+                                </div>
+
+                                <h3>Pagamento</h3>
+                                <div class="payment-methods">
+                                    <div class="payment-method">
+                                        <input type="radio" id="credit-card" name="payment" value="credit-card" checked>
+                                        <label for="credit-card">Cartão de Crédito (Stripe)</label>
+                                    </div>
+                                    <div class="payment-method">
+                                        <input type="radio" id="pix" name="payment" value="pix">
+                                        <label for="pix">PIX</label>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn--primary btn--full-width">Finalizar Pedido</button>
+                            </form>
+                        </div>
+
+                        <div class="order-summary">
+                            <h3>Resumo do Pedido</h3>
+                            <div id="order-items"></div>
+                            <div class="order-total">
+                                <div class="total-line">
+                                    <span>Subtotal:</span>
+                                    <span id="order-subtotal">R$ 0,00</span>
+                                </div>
+                                <div class="total-line">
+                                    <span>Frete:</span>
+                                    <span>R$ 15,00</span>
+                                </div>
+                                <div class="total-line total-final">
+                                    <span>Total:</span>
+                                    <span id="order-total">R$ 0,00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Order Success Page -->
+        <section id="success-page" class="page">
+            <div class="container">
+                <div class="success-container">
+                    <div class="success-icon">✅</div>
+                    <h2>Pedido Confirmado!</h2>
+                    <p>Seu pedido foi processado com sucesso. Você receberá um email de confirmação em breve.</p>
+                    <div class="order-details" id="order-details"></div>
+                    <button class="btn btn--primary" onclick="navigateTo('home')">Continuar Comprando</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seller Dashboard -->
+        <section id="seller-page" class="page">
+            <div class="container">
+                <div class="seller-dashboard">
+                    <h2>Painel do Vendedor</h2>
+                    
+                    <div class="dashboard-tabs">
+                        <button class="tab-btn active" data-tab="products">Produtos</button>
+                        <button class="tab-btn" data-tab="orders">Pedidos</button>
+                        <button class="tab-btn" data-tab="add-product">Adicionar Produto</button>
+                    </div>
+
+                    <!-- Products Tab -->
+                    <div id="products-tab" class="tab-content active">
+                        <div class="products-list" id="seller-products">
+                            <!-- Seller products will be inserted here -->
+                        </div>
+                    </div>
+
+                    <!-- Orders Tab -->
+                    <div id="orders-tab" class="tab-content">
+                        <div class="orders-list" id="seller-orders">
+                            <div class="empty-state">
+                                <p>Nenhum pedido recebido ainda.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add Product Tab -->
+                    <div id="add-product-tab" class="tab-content">
+                        <form id="add-product-form" class="add-product-form">
+                            <div class="form-group">
+                                <label class="form-label" for="product-name">Nome do Produto</label>
+                                <input type="text" id="product-name" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="product-price">Preço (R$)</label>
+                                <input type="number" id="product-price" class="form-control" step="0.01" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="product-category">Categoria</label>
+                                <select id="product-category" class="form-control" required>
+                                    <option value="">Selecione uma categoria</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="product-description">Descrição</label>
+                                <textarea id="product-description" class="form-control" rows="3" required></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="product-stock">Estoque</label>
+                                <input type="number" id="product-stock" class="form-control" required>
+                            </div>
+
+                            <button type="submit" class="btn btn--primary">Adicionar Produto</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Carrinho de Compras</h3>
+            <button class="cart-close" id="cart-close">✕</button>
+        </div>
+        
+        <div class="cart-content">
+            <div id="cart-items" class="cart-items">
+                <!-- Cart items will be inserted here -->
+            </div>
+        </div>
+        
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total: <span id="cart-total">R$ 0,00</span></span>
+            </div>
+            <button class="btn btn--primary btn--full-width" id="checkout-btn">Finalizar Compra</button>
+        </div>
+    </div>
+
+    <!-- Cart Overlay -->
+    <div id="cart-overlay" class="cart-overlay"></div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Título</h3>
+                <button class="modal-close" id="modal-close">✕</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Modal content -->
+            </div>
+            <div class="modal-footer" id="modal-footer">
+                <!-- Modal buttons -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Overlay -->
+    <div id="modal-overlay" class="modal-overlay hidden"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
